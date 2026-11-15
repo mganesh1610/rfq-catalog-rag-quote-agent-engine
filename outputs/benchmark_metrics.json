@@ -1,0 +1,55 @@
+{
+  "source_rows_total": 347578,
+  "source_table_counts": {
+    "products": 32951,
+    "sellers": 3095,
+    "customers": 99441,
+    "orders": 99441,
+    "order_items": 112650
+  },
+  "verified_sha256": {
+    "olist_products_dataset.csv": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc",
+    "olist_sellers_dataset.csv": "31eb9bd50d684526a78f2389413ce61841e97692de7b828fe7d956b534586312",
+    "olist_order_items_dataset.csv": "4f6abdbbc94036d0df4a76fa0520c072e31a40119d70f7f370fba1e2285d2bcb",
+    "olist_orders_dataset.csv": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf",
+    "olist_customers_dataset.csv": "c26c17f59f3027a6a0dbeb8f1fa373c38f3323ecc84f225a8f4820e5bb288df8"
+  },
+  "catalog_deduplication": {
+    "raw_distributor_listings": 18000,
+    "canonical_deduplicated_skus": 9611,
+    "duplicates_consolidated": 8389
+  },
+  "labeled_rfq_benchmark": {
+    "total_labeled_rfqs": 2400,
+    "train_rfqs": 1680,
+    "holdout_test_rfqs": 720,
+    "holdout_gold_line_items": 749
+  },
+  "sequence_ner_metrics": {
+    "entity_token_precision": 1.0,
+    "entity_token_recall": 1.0,
+    "entity_token_f1": 1.0,
+    "mpn_exact_accuracy": 0.9826,
+    "quantity_exact_accuracy": 1.0,
+    "ship_to_exact_accuracy": 1.0,
+    "ner_p50_latency_ms": 0.0821,
+    "ner_p95_latency_ms": 0.1108,
+    "llm_fallback_rate_pct": 1.81,
+    "inference_cost_reduction_pct": 96.94
+  },
+  "hybrid_catalog_rag_metrics": {
+    "bm25_only_top1_recall": 0.769,
+    "bm25_only_top5_recall": 0.7757,
+    "hybrid_rrf_reranked_top1_recall": 0.9866,
+    "hybrid_rrf_reranked_top5_recall": 0.9893,
+    "rag_p50_latency_ms": 2.6212,
+    "rag_p95_latency_ms": 4.7388
+  },
+  "quote_agent_governance": {
+    "persisted_quotes": 720,
+    "persisted_audit_events": 720,
+    "sqlite_integrity": "ok",
+    "ready_for_signoff_count": 707,
+    "escalated_human_review_count": 13
+  }
+}

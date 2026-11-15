@@ -1,0 +1,51 @@
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector, pg_trgm]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+model CatalogSku {
+  skuId        String   @id @default(uuid()) @map("sku_id") @db.Uuid
+  canonicalMpn String   @unique @map("canonical_mpn") @db.VarChar(64)
+  manufacturer String   @db.VarChar(128)
+  category     String   @db.VarChar(128)
+  specSummary  String   @map("spec_summary")
+  minUnitCost  Decimal  @map("min_unit_cost") @db.Decimal(12, 2)
+  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  @@map("catalog_skus")
+}
+
+model Quote {
+  quoteId         String            @id @map("quote_id") @db.VarChar(32)
+  rfqId           String            @unique @map("rfq_id") @db.VarChar(32)
+  sourceFormat    String            @map("source_format") @db.VarChar(32)
+  shipToAddress   String            @map("ship_to_address")
+  confidenceScore Decimal           @map("confidence_score") @db.Decimal(5, 4)
+  reviewStatus    String            @map("review_status") @db.VarChar(32)
+  totalQuoteUsd   Decimal           @map("total_quote_usd") @db.Decimal(14, 2)
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  auditTrails     QuoteAuditTrail[]
+
+  @@index([reviewStatus, confidenceScore])
+  @@map("quotes")
+}
+
+model QuoteAuditTrail {
+  auditId          BigInt   @id @default(autoincrement()) @map("audit_id")
+  quoteId          String   @map("quote_id") @db.VarChar(32)
+  actorUserId      String   @map("actor_user_id") @db.VarChar(64)
+  actorRole        String   @map("actor_role") @db.VarChar(32)
+  action           String   @db.VarChar(64)
+  reviewerFeedback Json?    @map("reviewer_feedback")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  quote            Quote    @relation(fields: [quoteId], references: [quoteId], onDelete: Cascade)
+
+  @@index([quoteId, createdAt(sort: Desc)])
+  @@map("quote_audit_trails")
+}
